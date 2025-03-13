@@ -5,13 +5,20 @@ data "aws_vpc" "existing_vpc" {
 
 # Fetch private subnets associated with the VPC
 data "aws_subnet" "private_subnet_1" {
-  id = var.subnet_ids[0]
+  id = var.private_subnet_ids[0]
 }
 
 data "aws_subnet" "private_subnet_2" {
-  id = var.subnet_ids[1]
+  id = var.private_subnet_ids[1]
 }
 
+data "aws_subnet" "public_subnet_1" {
+  id = var.public_subnet_ids[0]
+}
+
+data "aws_subnet" "public_subnet_2" {
+  id = var.public_subnet_ids[1]
+}
 output "vpc_id" {
   value = data.aws_vpc.existing_vpc.id
 }

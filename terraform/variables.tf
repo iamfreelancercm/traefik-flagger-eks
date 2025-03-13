@@ -49,3 +49,7 @@ variable "disk_size" {
   type    = number
   default = 30
 }
+
+variable "public_subnet_ids" {
+    type = list(string)
+}
