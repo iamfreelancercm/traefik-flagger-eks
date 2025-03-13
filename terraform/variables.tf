@@ -6,9 +6,8 @@ variable "vpc_id" {
   type    = string
   default = "vpc-027f7dc238db7de7e"
 }
-variable "subnet_ids" {
-  type    = list(string)
-  default = ["subnet-0849867956604fe3c", "subnet-02a0ceed40d0b4f61"]
+variable "private_subnet_ids" {
+  type = list(string)
 }
 
 variable "name" {
@@ -18,6 +17,11 @@ variable "name" {
 variable "eks_version" {
   type    = string
   default = "1.32"
+}
+
+variable "subnet_ids" {
+  type    = list(string)
+  default = ["subnet-0849867956604fe3c", "subnet-02a0ceed40d0b4f61"]
 }
 
 
