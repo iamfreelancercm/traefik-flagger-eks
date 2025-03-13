@@ -3,7 +3,7 @@ resource "aws_eks_cluster" "eks" {
   role_arn = aws_iam_role.eks_cluster_role.arn
   version  = var.eks_version
   access_config {
-    authentication_mode = "API"
+    authentication_mode = "API_AND_CONFIG_MAP"
   }
 
   bootstrap_self_managed_addons = false
@@ -41,3 +41,8 @@ depends_on = [
   ]
 
 }
+
+# resource "aws_eks_access_entry" "example" {
+#   cluster_name      = aws_eks_cluster.eks.name
+#   principal_arn     = "arn:aws:iam::495599763524:user/anup_user"
+# }
