@@ -22,22 +22,18 @@ variable "eks_version" {
 
 
 # --- Node Group ---
-variable "scaling_config" {
-  type = map(number)
-  default = {
-    desired_size = 1
-    max_size     = 1
-    min_size     = 1
-  }
-}
-variable "instance_types" {
-  type    = list(string)
-  default = ["t3.medium"]
-}
-variable "ssh_key" {
-  type    = string
-  default = "metaplore"
-}
+# variable "scaling_config" {
+#   type = map(number)
+#   default = {
+#     desired_size = 1
+#     max_size     = 1
+#     min_size     = 1
+#   }
+# }
+# variable "instance_types" {
+#   type    = list(string)
+#   default = ["t3.medium"]
+# }
 variable "tags" {
   type = map(string)
   default = {
@@ -45,10 +41,10 @@ variable "tags" {
     "type" = "flagger"
   }
 }
-variable "disk_size" {
-  type    = number
-  default = 30
-}
+# variable "disk_size" {
+#   type    = number
+#   default = 30
+# }
 
 variable "public_subnet_ids" {
     type = list(string)
