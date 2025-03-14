@@ -18,3 +18,4 @@ eksctl create iamserviceaccount \
   --region eu-central-1 \
   --attach-policy-arn arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy \
   --approve
+
