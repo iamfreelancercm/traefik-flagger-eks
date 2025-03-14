@@ -41,8 +41,3 @@ depends_on = [
   ]
 
 }
-
-# resource "aws_eks_access_entry" "example" {
-#   cluster_name      = aws_eks_cluster.eks.name
-#   principal_arn     = "arn:aws:iam::495599763524:user/anup_user"
-# }
