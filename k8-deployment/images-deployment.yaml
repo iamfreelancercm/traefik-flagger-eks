@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: images
+  namespace: apps
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: images
+  template:
+    metadata:
+      labels:
+        app: images
+    spec:
+      containers:
+      - name: images-container
+        image: 495599763524.dkr.ecr.eu-central-1.amazonaws.com/tf-flagger:images
+        ports:
+        - containerPort: 3000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: images-svc
+  namespace: apps
+  labels:
+    app: images
+spec:
+  type: ClusterIP
+  ports:
+  - port: 3000
+    name: images-port
+    protocol: TCP
+    
+  selector:
+    app: images
