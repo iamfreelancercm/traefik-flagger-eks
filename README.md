@@ -25,3 +25,4 @@ kubectl create ns cert-manager
 kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.17.0/cert-manager.yaml
 cd cert-manager 
 helm install cert-manager jetstack/cert-manager --namespace cert-manager --values=value.yml
+helm upgrade --install cert-manager jetstack/cert-manager --namespace cert-manager --values=value.yml

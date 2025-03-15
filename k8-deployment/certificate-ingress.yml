@@ -1,0 +1,52 @@
+---
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: letsencrypt-prod
+spec:
+  acme:
+    email: kloudgenic@gmail.com
+    server: https://acme-v02.api.letsencrypt.org/directory
+    privateKeySecretRef:
+      name: letsencrypt-prod-issuer-account-key
+    solvers:
+      - http01:
+          ingress:
+            ingressClassName: traefik
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: images-cert
+  namespace: apps
+spec:
+  commonName: images.anup.co.in
+  secretName: images-cert
+  dnsNames:
+    - "images.anup.co.in"
+  issuerRef:
+    kind: ClusterIssuer
+    name: letsencrypt-prod
+
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: nginx-images
+  namespace: apps
+  annotations: 
+    kubernetes.io/ingress.class: traefik
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`images.anup.co.in`)
+      kind: Rule
+      services:
+        - name: images-svc
+          port: 3000
+      middlewares:
+        - name: default-headers
+          namespace: traefik
+  tls:
+    secretName: images-cert

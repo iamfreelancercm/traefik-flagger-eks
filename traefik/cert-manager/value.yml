@@ -4,10 +4,11 @@ crds:
   enabled: true
 replicaCount: 1
 extraArgs:
-  - --dns01-recursive-nameservers=97.74.103.14:53,173.201.71.14:53
-  - --dns01-recursive-nameservers-only
-podDnsPolicy: None
-podDnsConfig:
-  nameservers:
-    - "97.74.103.14"
-    - "173.201.71.14"
+  - --enable-gateway-api
+#   - --dns01-recursive-nameservers=97.74.103.14:53,173.201.71.14:53
+#   - --dns01-recursive-nameservers-only
+# podDnsPolicy: None
+# podDnsConfig:
+#   nameservers:
+#     - "97.74.103.14"
+#     - "173.201.71.14"

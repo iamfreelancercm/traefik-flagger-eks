@@ -187,7 +187,7 @@ gatewayClass:  # @schema additionalProperties: false
 ingressRoute:
   dashboard:
     # -- Create an IngressRoute for the dashboard
-    enabled: true
+    enabled: false
     # -- Additional ingressRoute annotations (e.g. for kubernetes.io/ingress.class)
     annotations: {}
     # -- Additional ingressRoute labels (e.g. for filtering IngressRoute by custom labels)
@@ -268,9 +268,9 @@ providers:  # @schema additionalProperties: false
     # -- Load Kubernetes IngressRoute provider
     enabled: true
     # -- Allows IngressRoute to reference resources in namespace other than theirs
-    allowCrossNamespace: false
+    allowCrossNamespace: true
     # -- Allows to reference ExternalName services in IngressRoute
-    allowExternalNameServices: false
+    allowExternalNameServices: true
     # -- Allows to return 503 when there is no endpoints available
     allowEmptyServices: true
     # -- When the parameter is set, only resources containing an annotation with the same value are processed. Otherwise, resources missing the annotation, having an empty value, or the value traefik are processed. It will also set required annotation on Dashboard and Healthcheck IngressRoute when enabled.
@@ -605,7 +605,7 @@ globalArguments:
 # See [CLI Reference](https://docs.traefik.io/reference/static-configuration/cli/)
 # Use curly braces to pass values: `helm install --set="additionalArguments={--providers.kubernetesingress.ingressclass=traefik-internal,--log.level=DEBUG}"`
 additionalArguments:
-  - "--log.level=DEBUG"
+  - "--log.level=INFO"
   - "--serversTransport.insecureSkipVerify=true"
 #  - "--providers.kubernetesingress.ingressclass=traefik-internal"
 #  - "--log.level=DEBUG"
@@ -647,7 +647,7 @@ ports:
     # hostPort: 8000
     # containerPort: 8000
     expose:
-      default: false
+      default: true
     exposedPort: 80
     ## -- Different target traefik port on the cluster, useful for IP type LB
     targetPort:  # @schema type:[string, integer, null]; minimum:0

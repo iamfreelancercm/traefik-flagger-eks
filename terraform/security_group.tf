@@ -1,6 +1,6 @@
 resource "aws_security_group" "eks_sg" {
   vpc_id      = var.vpc_id
-  name        = "eks-security-group"
+  name        = "${var.name}-eks-security-group"
   description = "Security group for EKS cluster"
 
   egress {

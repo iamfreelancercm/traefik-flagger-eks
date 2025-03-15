@@ -1,0 +1,49 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: pavan-cert
+  namespace: apps
+spec:
+  commonName: pavan.anup.co.in
+  secretName: pavan-cert
+  dnsNames:
+    - "pavan.anup.co.in"
+  issuerRef:
+    kind: ClusterIssuer
+    name: letsencrypt-prod
+
+---
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: redirect-to-https
+  namespace: apps
+spec:
+  redirectScheme:
+    scheme: https
+    permanent: true
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: nginx-video
+  namespace: apps
+  annotations: 
+    kubernetes.io/ingress.class: traefik
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`pavan.anup.co.in`)
+      kind: Rule
+      services:
+        - name: video-svc
+          port: 3000
+      middlewares:
+        - name: redirect-to-https
+          namespace: apps
+        - name: default-headers
+          namespace: traefik
+
+  tls:
+    secretName: pavan-cert
