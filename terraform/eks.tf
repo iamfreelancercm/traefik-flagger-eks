@@ -39,11 +39,20 @@ depends_on = [
 
 }
 
-# resource "aws_eks_access_policy_association" "access" {
-#   cluster_name  = aws_eks_cluster.eks.name
-#   policy_arn    = "arn:aws:eks::aws:cluster-access-policy/AmazonEKSAdminPolicy"
-#   principal_arn = "arn:aws:iam::495599763524:user/anup_user"
-#   access_scope {
-#     type = "cluster"
-#   }
-# }
+resource "aws_eks_access_entry" "example" {
+  cluster_name      = aws_eks_cluster.eks.name
+  principal_arn     = "arn:aws:iam::495599763524:user/anup_user"
+  kubernetes_groups = ["master"]
+  type              = "STANDARD"
+}
+
+
+resource "aws_eks_access_policy_association" "eks_policy_association" {
+  cluster_name  = aws_eks_cluster.eks.name 
+  policy_arn    = "arn:aws:eks::aws:cluster-access-policy/AmazonEKSClusterAdminPolicy"
+  principal_arn = "arn:aws:iam::495599763524:user/anup_user"
+
+  access_scope {
+    type       = "cluster"
+  }
+}
