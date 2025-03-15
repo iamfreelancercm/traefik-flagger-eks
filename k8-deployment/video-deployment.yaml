@@ -51,10 +51,7 @@ spec:
         - name: video-svc
           port: 3000
       middlewares:
-        - name: redirect-to-https
-          namespace: apps
         - name: default-headers
           namespace: traefik
-
   tls:
     secretName: video-cert
