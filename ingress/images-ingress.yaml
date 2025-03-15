@@ -1,0 +1,16 @@
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: images-ingress
+  namespace: apps
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`images.anup.co.in`)
+      kind: Rule
+      services:
+        - name: images-svc
+          port: 3000
+  tls:
+    certResolver: letsencrypt

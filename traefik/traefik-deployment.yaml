@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: traefik
+  namespace: traefik
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: traefik
+  template:
+    metadata:
+      labels:
+        app: traefik
+    spec:
+      containers:
+        - name: traefik
+          image: traefik:v3.0
+          args:
+            - "--api.insecure=true"
+            - "--entrypoints.web.address=:80"
+            - "--entrypoints.websecure.address=:443"
+            - "--certificatesresolvers.letsencrypt.acme.email=iamfreelancercm@gmail.com"
+            - "--certificatesresolvers.letsencrypt.acme.storage=/data/acme.json"
+            - "--certificatesresolvers.letsencrypt.acme.httpchallenge.entrypoint=web"
+            - "--providers.kubernetescrd"
+            - "--providers.kubernetesingress"
+          ports:
+            - name: web
+              containerPort: 80
+            - name: websecure
+              containerPort: 443
+          volumeMounts:
+            - mountPath: "/data"
+              name: acme-storage
+          imagePullPolicy: Always
+      volumes:
+        - name: acme-storage
+          persistentVolumeClaim:
+            claimName: traefik-acme-pvc
+
