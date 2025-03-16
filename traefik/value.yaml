@@ -712,7 +712,7 @@ ports:
       ## TCP & UDP (Http3). There is a workaround in this chart using dual Service.
       ## https://github.com/kubernetes/kubernetes/issues/47249#issuecomment-587960741
       enabled: false
-      advertisedPort: 443  # @schema type:[integer, null]; minimum:0
+      advertisedPort: 4443  # @schema type:[integer, null]; minimum:0
     forwardedHeaders:
         # -- Trust forwarded headers information (X-Forwarded-*).
       trustedIPs: []
@@ -735,13 +735,6 @@ ports:
     # --  See [upstream documentation](https://doc.traefik.io/traefik/routing/entrypoints/#tls)
     tls:
       enabled: true
-      # options: ""
-      # certResolver: "letsencrypt"
-      # domains: 
-      #   - main: "images.anup.co.in"
-      #   - sans: 
-      #     - "audio.anup.co.in"
-      #     - "video.anup.co.in"
     # -- One can apply Middlewares on an entrypoint
     # https://doc.traefik.io/traefik/middlewares/overview/
     # https://doc.traefik.io/traefik/routing/entrypoints/#middlewares
