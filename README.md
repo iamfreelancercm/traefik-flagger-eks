@@ -18,6 +18,7 @@ kubectl apply -f default-header-middleware.yaml
 kubectl create ns cert-manager  
 cd cert-manager 
 helm upgrade --install cert-manager jetstack/cert-manager --namespace cert-manager --values=value.yml
+kubectl apply -f  default-header-middleware.yaml
 
 # -- setup certificate 
 cd k8-deployment 

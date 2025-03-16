@@ -5,7 +5,7 @@ resource "tls_private_key" "rsa" {
 }
 
 resource "aws_key_pair" "kp" {
-  key_name   = "${var.name}-ssh-key" # Create "myKey" to AWS!!
+  key_name   = "${var.name}-ssh-key" 
   public_key = tls_private_key.rsa.public_key_openssh
 }
 
