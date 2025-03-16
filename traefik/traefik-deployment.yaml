@@ -32,10 +32,10 @@ spec:
               containerPort: 443
           volumeMounts:
             - mountPath: "/data"
-              name: acme-storage
+              name: traefik-acme-storage
           imagePullPolicy: Always
       volumes:
-        - name: acme-storage
+        - name: traefik-acme-storage
           persistentVolumeClaim:
-            claimName: traefik-acme-pvc
+            claimName: ebs-claim
 
