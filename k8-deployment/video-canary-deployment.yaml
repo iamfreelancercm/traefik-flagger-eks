@@ -1,17 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: video
+  name: video-canary
   namespace: apps
 spec:
   replicas: 2
   selector:
     matchLabels:
       app: video
+      version: canary
   template:
     metadata:
       labels:
         app: video
+        version: canary
     spec:
       containers:
       - name: video-container
@@ -22,10 +24,11 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: video-svc
+  name: video-svc-canary
   namespace: apps
   labels:
     app: video
+    version: canary
 spec:
   ports:
   - port: 3000
@@ -33,25 +36,3 @@ spec:
     protocol: TCP
   selector:
     app: video
----
-apiVersion: traefik.io/v1alpha1
-kind: IngressRoute
-metadata:
-  name: video-ingress-route
-  namespace: apps
-  annotations: 
-    kubernetes.io/ingress.class: traefik
-spec:
-  entryPoints:
-    - websecure
-  routes:
-    - match: Host(`demo-video.anup.co.in`)
-      kind: Rule
-      services:
-        - name: video-svc
-          port: 3000
-      middlewares:
-        - name: default-headers
-          namespace: traefik
-  tls:
-    secretName: video-cert

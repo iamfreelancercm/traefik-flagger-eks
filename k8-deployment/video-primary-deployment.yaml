@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: video-primary
+  namespace: apps
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: video
+      version: primary
+  template:
+    metadata:
+      labels:
+        app: video
+        version: primary
+    spec:
+      containers:
+      - name: video-container
+        image: 495599763524.dkr.ecr.eu-central-1.amazonaws.com/tf-flagger:video
+        ports:
+        - containerPort: 3000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: video-svc-primary
+  namespace: apps
+  labels:
+    app: video
+    version: primary
+spec:
+  ports:
+  - port: 3000
+    name: video-port
+    protocol: TCP
+  selector:
+    app: video
