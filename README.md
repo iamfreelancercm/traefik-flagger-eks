@@ -1,35 +1,62 @@
-# Create EKS cluster using terraform 
-    cd terraform 
-    terraform init
-    terraform apply
-    aws eks --region eu-central-1 update-kubeconfig --name new-tf-flagger-traefik
+# Create EKS cluster using Terraform
+
+```sh
+cd terraform
+terraform init
+terraform apply
+aws eks --region eu-central-1 update-kubeconfig --name new-tf-flagger-traefik
+```
+
 # Traefik Installation
 
- https://doc.traefik.io/traefik/getting-started/install-traefik/#use-the-helm-chart
+[Traefik Installation Guide](https://doc.traefik.io/traefik/getting-started/install-traefik/#use-the-helm-chart)
 
-    helm repo add traefik https://traefik.github.io/charts
-    helm repo update
-    kubectl create ns traefik 
-    cd traefik  
-    helm upgrade --install --namespace=traefik traefik -f value.yaml traefik/traefik
-# -- Install middleware --
-    kubectl apply -f default-header-middleware.yaml 
+```sh
+helm repo add traefik https://traefik.github.io/charts
+helm repo update
+kubectl create ns traefik
+cd traefik  
+helm upgrade --install --namespace=traefik traefik -f value.yaml traefik/traefik
+```
 
-### --- install cert manager
-    kubectl create ns cert-manager  
-    cd cert-manager 
-    helm upgrade --install cert-manager jetstack/cert-manager --namespace cert-manager --values=value.yml
-    kubectl apply -f  default-header-middleware.yaml
+# Install Middleware
 
-# -- setup certificate 
-    cd k8-deployment 
-    kubectl create namespace apps
+```sh
+kubectl apply -f default-header-middleware.yaml
+```
 
-## NOTE: Before creating certificate please make sure subdomain entry should be preset at dns provider which need to point your ALB ##
+# Install Cert-Manager
 
-    kubectl apply -f certificate.yml 
+```sh
+kubectl create ns cert-manager  
+cd cert-manager
+helm upgrade --install cert-manager jetstack/cert-manager --namespace cert-manager --values=value.yml
+```
 
-# -- Install deployment 
-    cd k8-deployment
-    kubectl apply -f images-deployment.yaml
-    kubectl apply -f video-deployment.yaml  
+# Install Let's Encrypt Issuer
+
+```sh
+kubectl apply -f lets-encrypt-issuer.yaml
+```
+
+# Setup Certificate
+
+```sh
+cd k8-deployment
+kubectl create namespace apps
+```
+
+**NOTE:** Before creating a certificate, please ensure that the subdomain entry is present at your DNS provider and points to your ALB.
+
+```sh
+kubectl apply -f certificate.yml
+```
+
+# Install Deployment
+
+```sh
+cd k8-deployment
+kubectl apply -f images-deployment.yaml
+kubectl apply -f video-deployment.yaml
+```
+
