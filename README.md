@@ -30,6 +30,8 @@ kubectl apply -f default-header-middleware.yaml
 ```sh
 kubectl create ns cert-manager  
 cd cert-manager
+helm repo add jetstack https://charts.jetstack.io --force-update
+helm repo update
 helm upgrade --install cert-manager jetstack/cert-manager --namespace cert-manager --values=value.yml
 ```
 
