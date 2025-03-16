@@ -33,7 +33,7 @@ variable "scaling_config" {
   }
 }
 variable "instance_types" {
-  type    = list(string)
+  type    = list(any)
   default = ["t3.medium"]
 }
 variable "tags" {

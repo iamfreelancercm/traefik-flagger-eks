@@ -13,11 +13,9 @@ resource "aws_eks_node_group" "node_group" {
 
   remote_access {
       ec2_ssh_key = aws_key_pair.kp.key_name
-      #source_security_group_ids = [aws_security_group.eks_sg.id]
   }
-  instance_types = ["t3.medium"]
+  instance_types = var.instance_types
   capacity_type  = "ON_DEMAND"
-
   tags      = var.tags
 }
 

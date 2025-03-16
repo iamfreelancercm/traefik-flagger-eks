@@ -9,3 +9,4 @@ public_subnet_ids = [
     "subnet-093def6775396e26d"
 ]
 name = "flagger-traefik-updated"
+instance_types = ["t3.medium"]
