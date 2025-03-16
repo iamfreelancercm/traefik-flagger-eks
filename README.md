@@ -5,7 +5,8 @@
     aws eks --region eu-central-1 update-kubeconfig --name new-tf-flagger-traefik
 # Traefik Installation
 
-    https://doc.traefik.io/traefik/getting-started/install-traefik/#use-the-helm-chart
+ https://doc.traefik.io/traefik/getting-started/install-traefik/#use-the-helm-chart
+
     helm repo add traefik https://traefik.github.io/charts
     helm repo update
     kubectl create ns traefik 
