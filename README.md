@@ -62,3 +62,7 @@ kubectl apply -f images-deployment.yaml
 kubectl apply -f video-deployment.yaml
 ```
 
+# Flagger Deployment 
+
+https://fluxcd.io/flagger/tutorials/traefik-progressive-delivery/
+
