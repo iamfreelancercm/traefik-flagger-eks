@@ -1,0 +1,35 @@
+apiVersion: flagger.app/v1beta1
+kind: Canary
+metadata:
+  name: video
+  namespace: apps
+spec:
+  provider: traefik
+  ingressRef:
+    apiVersion: networking.k8s.io/v1
+    kind: Ingress
+    name: video-ingress
+  targetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: video
+  #autoscalerRef:
+  #  apiVersion: autoscaling/v1
+  #  kind: HorizontalPodAutoscaler
+  #  name: video-hpa
+  service:
+    port: 3000
+    targetPort: 3000
+  analysis:
+    interval: 30s       # Check metrics every 1 minute
+    threshold: 1       # Allow 1 failure before rollback
+    #iterations: 1      # Maintain 50/50 split for 1 iteration period
+    stepWeight: 50     # Initial traffic percentage to canary
+    maxWeight: 50      # Maximum traffic percentage for canary
+    metrics:
+    - name: request-success-rate
+      threshold: 99    # 99% success rate required
+      interval: 1m
+    - name: request-duration
+      threshold: 250   # 500ms max latency
+      interval: 30s

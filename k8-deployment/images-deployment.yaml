@@ -1,19 +1,17 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: images-canary
+  name: images
   namespace: apps
 spec:
   replicas: 2
   selector:
     matchLabels:
       app: images
-      version: canary
   template:
     metadata:
       labels:
         app: images
-        version: canary
     spec:
       containers:
       - name: images-container
@@ -24,11 +22,10 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: images-svc-canary
+  name: images-svc
   namespace: apps
   labels:
     app: images
-    version: canary
 spec:
   type: ClusterIP
   ports:
