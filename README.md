@@ -15,13 +15,14 @@ aws eks --region eu-central-1 update-kubeconfig --name new-tf-flagger-traefik
 helm repo add traefik https://traefik.github.io/charts
 helm repo update
 kubectl create ns traefik
-cd traefik  
-helm upgrade --install --namespace=traefik traefik -f value.yaml traefik/traefik
+cd traefik/traefik-2.11.2
+helm upgrade --install --namespace=traefik traefik -f ./values.yaml . 
 ```
 
 # Install Middleware
 
 ```sh
+cd  traefik
 kubectl apply -f default-header-middleware.yaml
 ```
 
